@@ -112,4 +112,40 @@ test.describe('3. Conta e sessão', () => {
     await page.goto('/carrinho')
     await expect(page.getByText('Seu carrinho está vazio')).toBeVisible()
   })
+
+  test('sair do login volta à origem e nunca a uma rota privada (sem ciclo)', async ({ page, mock, isMobile }) => {
+    void mock
+    const leave = async () => {
+      if (isMobile) await page.getByRole('button', { name: 'Voltar' }).click()
+      else await page.keyboard.press('Escape')
+    }
+
+    // Origem pública (carrinho → pagamento): volta ao carrinho.
+    await page.goto('/entrar?redirect=%2Fpagamento')
+    await expect(page.getByPlaceholder('contato@email.com')).toBeVisible()
+    await leave()
+    await expect(page).toHaveURL(/\/carrinho$/)
+
+    // Origem privada (perfil exige sessão): vai para o início, sem voltar ao login.
+    await page.goto('/conta/perfil')
+    await expect(page).toHaveURL(/\/entrar\?redirect=%2Fconta%2Fperfil/)
+    await expect(page.getByPlaceholder('contato@email.com')).toBeVisible()
+    await leave()
+    await expect(page).toHaveURL(/\/$/)
+    await page.waitForTimeout(500)
+    await expect(page).not.toHaveURL(/\/entrar/)
+  })
+
+  test('mobile: telas de login e cadastro têm botão de voltar', async ({ page, mock, isMobile }) => {
+    test.skip(!isMobile, 'No desktop login e cadastro são um modal com botão de fechar.')
+    void mock
+    await page.goto('/cadastro')
+    await expect(page.getByRole('heading', { name: 'Criar perfil de colecionador' })).toBeVisible()
+    await page.getByRole('button', { name: 'Voltar' }).click()
+    await expect(page).toHaveURL(/\/$/)
+
+    await page.goto('/entrar')
+    await page.getByRole('button', { name: 'Voltar' }).click()
+    await expect(page).toHaveURL(/\/$/)
+  })
 })

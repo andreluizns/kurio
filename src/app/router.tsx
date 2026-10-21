@@ -39,3 +39,18 @@ export function requireAuth({ location }: { location: ParsedLocation }) {
 export function safeRedirect(target: unknown, fallback = '/') {
   return typeof target === 'string' && target.startsWith('/') && !target.startsWith('//') ? target : fallback
 }
+
+/** Rotas que exigem sessão (guardadas por `requireAuth`). */
+export const PRIVATE_PATHS = ['/pagamento', '/pedido', '/conta']
+
+export const isPrivatePath = (path: string) => PRIVATE_PATHS.some((p) => path.startsWith(p))
+
+/**
+ * Destino ao sair do login sem autenticar (voltar no mobile, fechar o modal no desktop).
+ * Nunca volta para uma rota privada — o guarda devolveria ao login, criando um ciclo.
+ */
+export function authExitTarget(redirect: unknown) {
+  const target = safeRedirect(redirect)
+  if (target.startsWith('/pagamento')) return '/carrinho'
+  return isPrivatePath(target) ? '/' : target
+}

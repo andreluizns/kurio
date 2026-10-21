@@ -4,9 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { toast } from 'sonner'
-import { safeRedirect } from '@/app/router'
+import { authExitTarget, safeRedirect } from '@/app/router'
 import { applyServerErrors, Field, PasswordInput } from '@/components/forms/Field'
-import { FacebookLogo, GoogleLogo } from '@/components/icons'
+import { ArrowLeft2, FacebookLogo, GoogleLogo } from '@/components/icons'
 import { Wordmark } from '@/components/layout/Header'
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
@@ -202,9 +202,20 @@ export function AuthPage({ mode, redirect, reason }: { mode: Mode; redirect?: st
   const subtitle =
     mode === 'login' ? 'Entre para gerenciar sua carteira, coleção e perfil de criador.' : 'Crie seu perfil de colecionador e conecte uma carteira quando quiser.'
 
+  // Sair sem autenticar volta à página de origem (nunca a uma rota privada).
+  const exit = () => void navigate({ href: authExitTarget(redirect), replace: true })
+
   if (!isDesktop) {
     return (
-      <main id="conteudo" className="flex min-h-dvh flex-col px-7 pt-[130px] pb-10">
+      <main id="conteudo" className="relative flex min-h-dvh flex-col px-7 pt-[130px] pb-10">
+        <button
+          type="button"
+          onClick={exit}
+          aria-label="Voltar"
+          className="absolute top-8 left-7 flex size-[35px] items-center justify-center rounded-full border border-line bg-surface-2 text-khaki"
+        >
+          <ArrowLeft2 className="size-5" />
+        </button>
         <Link to="/" aria-label="Kurio — página inicial" className="mx-auto">
           <Wordmark className="text-[32px] leading-[42px] tracking-[0.1em]" />
         </Link>
@@ -240,7 +251,7 @@ export function AuthPage({ mode, redirect, reason }: { mode: Mode; redirect?: st
       <div inert>
         <HomePage search={{}} />
       </div>
-      <Dialog open onOpenChange={(open) => !open && void navigate({ href: safeRedirect(redirect === '/pagamento' ? '/carrinho' : redirect), replace: true })}>
+      <Dialog open onOpenChange={(open) => !open && exit()}>
         <DialogContent className="w-[500px] max-w-[calc(100%-2rem)] gap-0 border-b-[10px] border-brand p-0 pb-14 sm:max-w-[500px]">
           <div className="flex flex-col items-center gap-10 px-12 pt-12">
             <DialogTitle asChild>

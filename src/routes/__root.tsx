@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect, useState } from 'react'
 import { createRootRouteWithContext, Outlet, useRouter } from '@tanstack/react-router'
 import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import type { RouterContext } from '@/app/router'
+import { isPrivatePath, type RouterContext } from '@/app/router'
 import { mocksEnabled } from '@/app/env'
 import { onSessionExpired } from '@/api/http'
 import { Toaster } from '@/components/ui/sonner'
@@ -12,7 +12,6 @@ import { clearPrivateCache, useSessionBootstrap } from '@/features/auth/use-auth
 import { useIsDesktop } from '@/lib/use-media-query'
 
 const MockPanel = lazy(() => import('@/mocks/panel/MockPanel'))
-const PRIVATE_PATHS = ['/pagamento', '/pedido', '/conta']
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootLayout,
@@ -30,7 +29,7 @@ function SessionExpiryWatcher() {
         sessionStore.set(null)
         clearPrivateCache(queryClient)
         const { pathname, href } = router.state.location
-        const isPrivate = PRIVATE_PATHS.some((p) => pathname.startsWith(p))
+        const isPrivate = isPrivatePath(pathname)
         toast.warning('Sua sessão expirou.', {
           id: 'session-expired',
           description: isPrivate ? 'Entre novamente para continuar de onde parou.' : 'Entre novamente para acessar seus dados.',
