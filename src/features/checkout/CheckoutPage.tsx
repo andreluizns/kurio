@@ -16,6 +16,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { useProfile, useWallets } from '@/features/account/queries'
 import { useSession } from '@/features/auth/session-store'
 import { CartChanges } from '@/features/cart/CartPage'
+import { checkoutBlockReason } from '@/features/cart/checkout-block'
 import { CouponField, SummaryRows, SummarySkeleton } from '@/features/cart/CartSummary'
 import { useCart } from '@/features/cart/use-cart'
 import { NETWORK_LABELS } from '@/features/catalog/search-params'
@@ -334,7 +335,8 @@ export function CheckoutPage() {
     if (attempt) setReview({ values: form.getValues(), resume: true })
   }
 
-  const blocked = !cart || !cart.items.length || cart.items.some((i) => i.quantity > i.available)
+  const blockReason = checkoutBlockReason(cart)
+  const blocked = !cart || !cart.items.length || !!blockReason
 
   if (cart && !cart.items.length && !hasAttempt) {
     return (
@@ -421,9 +423,15 @@ export function CheckoutPage() {
                 <span className="text-xl text-brand-light">{cart ? formatEth(cart.summary.total) : '—'}</span>
               </div>
               <div className="fixed inset-x-0 bottom-0 z-40 bg-ink/95 px-7 pt-3 pb-9">
+                {blockReason && (
+                  <p id="checkout-block-reason-mobile" className="mb-2 text-center text-xs text-coral">
+                    {blockReason}
+                  </p>
+                )}
                 <button
                   type="submit"
                   disabled={blocked}
+                  aria-describedby={blockReason ? 'checkout-block-reason-mobile' : undefined}
                   className="h-[60px] w-full rounded-[40px] bg-[linear-gradient(90deg,#d28a4c,#b8763f)] text-base font-bold text-ink disabled:opacity-50"
                 >
                   Confirmar compra
@@ -500,10 +508,16 @@ export function CheckoutPage() {
               <button
                 type="submit"
                 disabled={blocked || !ready}
+                aria-describedby={blockReason ? 'checkout-block-reason' : undefined}
                 className="mt-3 h-[45px] rounded-[5px] bg-brand text-[15px] leading-4 font-bold text-ink hover:bg-brand-light disabled:opacity-50"
               >
                 Confirmar compra
               </button>
+              {blockReason && (
+                <p id="checkout-block-reason" className="text-center text-xs text-coral">
+                  {blockReason}
+                </p>
+              )}
               <p className="text-center text-xs text-khaki">
                 Você revisará itens, cotação e carteira antes do envio. Pagamento: {PROVIDER_LABELS[form.watch('provider')]}.
               </p>

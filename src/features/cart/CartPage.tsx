@@ -12,6 +12,7 @@ import { useRecommendations } from '@/features/catalog/queries'
 import { formatEth } from '@/lib/money'
 import { useIsDesktop } from '@/lib/use-media-query'
 import { cn } from '@/lib/utils'
+import { checkoutBlockReason } from './checkout-block'
 import { CouponField, SummaryRows, SummarySkeleton } from './CartSummary'
 import { useAcknowledgeCart, useCart, useRemoveCartItem, useUpdateCartItem } from './use-cart'
 
@@ -181,7 +182,6 @@ function EmptyCart() {
   )
 }
 
-const blocking = (cart: Cart) => cart.items.some((i) => i.quantity > i.available)
 
 function DesktopCart() {
   const { data: cart, isPending, error, refetch, isFetching } = useCart()
@@ -254,12 +254,17 @@ function DesktopCart() {
                     <button
                       type="button"
                       onClick={checkout}
-                      disabled={!cart.items.length || blocking(cart)}
+                      disabled={!cart.items.length || !!checkoutBlockReason(cart)}
+                      aria-describedby={checkoutBlockReason(cart) ? 'checkout-block-reason' : undefined}
                       className="h-10 w-full rounded-[3px] bg-brand text-[15px] leading-4 font-bold text-ink hover:bg-brand-light disabled:opacity-50"
                     >
                       Conectar e finalizar
                     </button>
-                    {blocking(cart) && <p className="text-xs text-coral">Ajuste os itens sem disponibilidade para continuar.</p>}
+                    {checkoutBlockReason(cart) && (
+                      <p id="checkout-block-reason" className="text-center text-xs text-coral">
+                        {checkoutBlockReason(cart)}
+                      </p>
+                    )}
                     <Link to="/" hash="catalogo" className="text-[15px] leading-5 text-brand-light hover:underline">
                       Continuar explorando
                     </Link>
@@ -325,10 +330,16 @@ function MobileCart() {
           <div aria-live="polite" className={cn('transition-opacity', isFetching && 'opacity-70')}>
             <SummaryRows summary={cart.summary} variant="mobile" />
           </div>
+          {checkoutBlockReason(cart) && (
+            <p id="checkout-block-reason-mobile" className="text-center text-xs text-coral">
+              {checkoutBlockReason(cart)}
+            </p>
+          )}
           <button
             type="button"
             onClick={checkout}
-            disabled={blocking(cart)}
+            disabled={!!checkoutBlockReason(cart)}
+            aria-describedby={checkoutBlockReason(cart) ? 'checkout-block-reason-mobile' : undefined}
             className="mt-4 h-[60px] rounded-[40px] bg-[linear-gradient(90deg,#d28a4c,#b8763f)] text-base font-bold text-ink disabled:opacity-50"
           >
             Conectar e finalizar

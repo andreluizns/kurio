@@ -136,7 +136,7 @@ Todo evento tem `{ id, type, resource: { type, id }, version, occurredAt, data }
 
 - **Servidor como fonte.** O carrinho fica no servidor simulado, tanto para usuários quanto para visitantes (id em `localStorage`, enviado em `X-Cart-Id`). Por isso sobrevive ao refresh e é mesclado ao carrinho do usuário no login (`POST /cart/merge`), respeitando os limites.
 - **Limites.** Valem a disponibilidade de cada edição e o máximo de 10 por pedido. A interface limita o stepper e o servidor responde `QUANTITY_LIMIT`.
-- **Alterações em tempo real.** O servidor compara o preço reconhecido de cada linha com o atual e a quantidade com o estoque, e devolve `changes`. A interface mostra o aviso e bloqueia o checkout enquanto houver quantidade acima do disponível.
+- **Alterações em tempo real.** O servidor compara o preço reconhecido de cada linha com o atual e a quantidade com o estoque, e devolve `changes`. A interface mostra o aviso e bloqueia "Conectar e finalizar" e "Confirmar compra" enquanto houver quantidade acima do disponível ou preço alterado ainda não reconhecido (botão "Entendi os novos preços"), exibindo o motivo junto ao botão.
 - **Atualização otimista (com rollback).** Duas interações usam:
   - quantidade no carrinho;
   - favoritos, com rollback e ação "Tentar novamente".

@@ -16,8 +16,14 @@ test.describe('9. Alteração de preço/disponibilidade via Socket.IO durante o 
     await expect(page.getByTestId('cart-changes')).toContainText('preço de 1.19 ETH para 1.29 ETH')
     // 2 × 0.10 a mais no subtotal.
     await expect(page.getByTestId('summary-total')).toHaveText('27.046 ETH')
+
+    // Seguir para o pagamento exige reconhecer os novos preços.
+    const finish = page.getByRole('button', { name: 'Conectar e finalizar' })
+    await expect(finish).toBeDisabled()
+    await expect(page.getByText('Confirme os novos preços em “Entendi os novos preços” para continuar.')).toBeVisible()
     await page.getByRole('button', { name: 'Entendi os novos preços' }).click()
     await expect(page.getByTestId('cart-changes')).toHaveCount(0)
+    await expect(finish).toBeEnabled()
   })
 
   test('checkout impede a confirmação com cotação desatualizada', async ({ page, mock }) => {
