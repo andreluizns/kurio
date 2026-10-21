@@ -435,7 +435,7 @@ function MobileDetail({ nft, editionParam }: { nft: NftDetail; editionParam?: st
             type="button"
             onClick={() => buy(state.edition, state.quantity, true)}
             disabled={state.soldOut || pending}
-            className="h-[60px] flex-1 rounded-[40px] bg-[linear-gradient(90deg,#d28a4c,rgb(210_138_76/0.8))] text-base leading-5 font-bold text-ink disabled:opacity-50 sm:max-w-[196px]"
+            className="h-[60px] w-[196px] shrink-0 rounded-[40px] bg-[linear-gradient(90deg,#d28a4c,rgb(210_138_76/0.8))] text-base leading-5 font-bold text-ink disabled:opacity-50"
           >
             {state.soldOut ? 'Esgotado' : 'Comprar NFT'}
           </button>
