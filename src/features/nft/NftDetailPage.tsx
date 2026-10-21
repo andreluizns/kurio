@@ -3,7 +3,7 @@ import { Link, useNavigate, useRouter } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import type { NftDetail, NftEdition } from '@/api/contracts'
 import { isApiError } from '@/api/http'
-import { ArrowLeft2, Heart, Linkedin, Message, Star, TabShop, Twitter, Zoom } from '@/components/icons'
+import { ArrowLeft2, Close, Heart, Linkedin, Message, Star, TabShop, Twitter, Zoom } from '@/components/icons'
 import { ErrorState } from '@/components/feedback/ErrorState'
 import { NotFound } from '@/components/feedback/NotFound'
 import { PageShell } from '@/components/layout/PageShell'
@@ -12,7 +12,7 @@ import { NftArtwork } from '@/components/nft/NftArtwork'
 import { artworkSrc } from '@/lib/artwork'
 import { NftCarousel } from '@/components/nft/NftCarousel'
 import { QuantityStepper } from '@/components/nft/QuantityStepper'
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAddToCart } from '@/features/cart/use-cart'
 import { useNftDetail, useRelated } from '@/features/catalog/queries'
@@ -83,7 +83,6 @@ function Stars({ rating }: { rating: number }) {
 
 function Gallery({ nft }: { nft: NftDetail }) {
   const [view, setView] = useState(0)
-  const [zoomOpen, setZoomOpen] = useState(false)
   return (
     <div className="flex flex-col-reverse gap-4 lg:flex-row lg:items-center lg:gap-7">
       <div role="tablist" aria-label="Vistas da obra" className="flex gap-4 lg:flex-col">
@@ -112,22 +111,36 @@ function Gallery({ nft }: { nft: NftDetail }) {
             style={VIEWS[view].style}
           />
         </div>
-        <button
-          type="button"
-          onClick={() => setZoomOpen(true)}
-          aria-label="Ampliar imagem"
-          className="absolute top-[13px] right-3 flex size-[30px] items-center justify-center rounded-full border border-line bg-surface-2 text-cream hover:text-brand-light"
-        >
-          <Zoom className="size-5" />
-        </button>
+        {/* A lupa é o gatilho do diálogo: ao fechar, o foco volta para ela. */}
+        <Dialog>
+          <DialogTrigger
+            aria-label="Ampliar imagem"
+            className="absolute top-[13px] right-3 flex size-[30px] items-center justify-center rounded-full border border-line bg-surface-2 text-cream hover:text-brand-light"
+          >
+            <Zoom className="size-5" />
+          </DialogTrigger>
+          {/* A foto é dimensionada para caber inteira na tela; o fechar segue o estilo do botão de ampliar. */}
+          <DialogContent showCloseButton={false} className="w-auto max-w-none p-4 sm:max-w-none">
+            <DialogTitle className="sr-only">{nft.name}</DialogTitle>
+            <DialogDescription className="sr-only">Imagem ampliada da obra.</DialogDescription>
+            <div className="relative">
+              <img
+                src={artworkSrc(nft.artwork, 960)}
+                alt={nft.name}
+                width={960}
+                height={960}
+                className="aspect-square w-[min(calc(100vw-4rem),calc(100dvh-4rem),900px)] max-w-none rounded-2xl object-cover"
+              />
+              <DialogClose
+                aria-label="Fechar imagem ampliada"
+                className="absolute top-3 right-3 flex size-[30px] items-center justify-center rounded-full border border-line bg-surface-2 text-cream hover:text-brand-light"
+              >
+                <Close className="size-3.5" />
+              </DialogClose>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
-      <Dialog open={zoomOpen} onOpenChange={setZoomOpen}>
-        <DialogContent className="max-w-[min(92vw,900px)] p-4 sm:max-w-[min(92vw,900px)]">
-          <DialogTitle className="sr-only">{nft.name}</DialogTitle>
-          <DialogDescription className="sr-only">Imagem ampliada da obra.</DialogDescription>
-          <img src={artworkSrc(nft.artwork, 960)} alt={nft.name} width={960} height={960} className="aspect-square w-full rounded-2xl object-cover" />
-        </DialogContent>
-      </Dialog>
     </div>
   )
 }
