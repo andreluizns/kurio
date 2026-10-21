@@ -50,6 +50,8 @@ Copie `.env.example` para `.env` se quiser alterar algo. Nenhuma variável é ob
 | Ana Sato | `ana@kurio.dev` | `Kurio@2026` | Carrinho igual ao do layout (Emerald ×2, Violet ×6, Ivory ×9), carteiras principal e secundária, 2 favoritos |
 | Bruno Lima | `bruno@kurio.dev` | `Kurio@2026` | Carrinho vazio, só carteira principal, 1 favorito |
 
+**Os dados ficam salvos no navegador.** A API simulada guarda tudo no `localStorage` de cada navegador, para manter o estado após o refresh. Compras, quantidades alteradas, cupons e itens adicionados continuam salvos entre visitas, então os dados iniciais da tabela só aparecem num navegador novo. Para voltar a eles, use o painel **MOCKS** → **Resetar dados e cenários** (canto inferior esquerdo no desktop, lateral esquerda no mobile) ou abra o site numa aba anônima.
+
 Novas contas podem ser criadas em `/cadastro`. As senhas ficam no banco simulado apenas como hash SHA-256 com salt; o cliente guarda só o token de sessão.
 
 **Cupons:** `KURIO10` (10%), `GENESIS5` (5%) e `VERAO2025` (expirado). Qualquer outro código é inválido.
