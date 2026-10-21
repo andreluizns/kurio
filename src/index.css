@@ -1,0 +1,150 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/* Roboto Mono servida localmente (public/fonts, subconjunto latin do @fontsource) e pré-carregada no index.html. */
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/roboto-mono-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/roboto-mono-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/roboto-mono-700.woff2') format('woff2');
+}
+
+@custom-variant dark (&:is(.dark *));
+
+/* Tokens extraídos do Figma (design/frames). */
+@theme {
+  --font-mono: 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans: var(--font-mono);
+
+  --color-ink: #140d0a;
+  --color-surface: #241612;
+  --color-surface-2: #2f1d15;
+  --color-band: #38220f;
+  --color-line: #3f2319;
+  --color-line-2: #55321f;
+  --color-brand: #d28a4c;
+  --color-brand-light: #e89b55;
+  --color-cream: #f5f1eb;
+  --color-sand: #cfb28c;
+  --color-khaki: #b39463;
+  --color-coral: #f0805f;
+  --color-mint: #59c36a;
+
+  --shadow-glow: 0 0 20px 0 rgb(10 6 4 / 0.45);
+  --shadow-lift: 0 6px 20px 0 rgb(10 6 4 / 0.45);
+  --shadow-soft: 0 4px 12px 0 rgb(20 13 10 / 0.15);
+
+  --container-page: 1200px;
+
+  --animate-shimmer: shimmer 1.6s linear infinite;
+  @keyframes shimmer {
+    from { background-position: 150% 0; }
+    to { background-position: -50% 0; }
+  }
+}
+
+/* Variáveis consumidas pelos componentes shadcn/ui, mapeadas para a identidade Kurio. */
+:root {
+  --radius: 0.375rem;
+  --background: var(--color-ink);
+  --foreground: var(--color-cream);
+  --card: var(--color-surface);
+  --card-foreground: var(--color-cream);
+  --popover: var(--color-surface);
+  --popover-foreground: var(--color-cream);
+  --primary: var(--color-brand);
+  --primary-foreground: var(--color-ink);
+  --secondary: var(--color-surface-2);
+  --secondary-foreground: var(--color-cream);
+  --muted: var(--color-surface-2);
+  --muted-foreground: var(--color-sand);
+  --accent: var(--color-surface-2);
+  --accent-foreground: var(--color-brand-light);
+  --destructive: var(--color-coral);
+  --border: var(--color-line);
+  --input: var(--color-line);
+  --ring: var(--color-brand-light);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 6px);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-ink font-mono text-cream antialiased;
+    min-height: 100dvh;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-brand-light);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@utility shimmer {
+  background-color: var(--color-surface-2);
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(210 138 76 / 0.12) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
