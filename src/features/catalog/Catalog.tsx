@@ -143,7 +143,7 @@ function Results({ search, onChange, variant }: CatalogProps & { variant: 'grid'
   const query = toCatalogQuery(search)
   const { data, isPending, isError, error, refetch, isFetching, isPlaceholderData, isRefetchError } = useCatalog(query)
   const mobile = variant === 'mobile'
-  const gridClass = mobile ? 'grid grid-cols-2 gap-x-4 gap-y-6 pb-8 [&>*:nth-child(even)]:translate-y-8' : 'grid grid-cols-2 gap-x-8 gap-y-[72px] lg:grid-cols-3'
+  const gridClass = mobile ? 'grid grid-cols-2 gap-x-4 gap-y-6' : 'grid grid-cols-2 gap-x-8 gap-y-[72px] lg:grid-cols-3'
 
   if (isPending) {
     return (
