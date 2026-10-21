@@ -269,7 +269,7 @@ export function MobileCatalog({ search, onChange, filtersOpen, onFiltersOpenChan
           </SheetHeader>
           <SortSelect sort={search.sort ?? 'recentes'} onChange={(sort) => onChange({ sort: sort === 'recentes' ? undefined : sort })} />
           <CatalogFilters search={search} facets={data?.facets} loading={isPending} onChange={onChange} />
-          <button type="button" onClick={() => onFiltersOpenChange(false)} className="h-12 rounded-[40px] bg-brand text-base font-bold text-ink">
+          <button type="button" onClick={() => onFiltersOpenChange(false)} className="h-[60px] shrink-0 rounded-[40px] bg-[linear-gradient(90deg,#d28a4c,rgb(210_138_76/0.8))] text-base font-bold text-ink">
             Ver resultados{data ? ` (${data.total})` : ''}
           </button>
         </SheetContent>
