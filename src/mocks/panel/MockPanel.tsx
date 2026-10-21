@@ -71,7 +71,7 @@ export default function MockPanel() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="fixed bottom-[140px] left-3 z-30 rounded-full border border-brand bg-ink/90 px-3 py-1.5 text-[11px] font-bold tracking-wide text-brand-light shadow-lift md:bottom-4"
+        className="fixed top-1/2 left-0 z-[60] -translate-y-1/2 rounded-r-full border border-l-0 border-brand bg-ink/90 px-2.5 py-1.5 text-[11px] font-bold tracking-wide text-brand-light shadow-lift md:top-auto md:bottom-4 md:left-3 md:translate-y-0 md:rounded-full md:border-l md:px-3"
         aria-label="Abrir painel de mocks"
       >
         MOCKS · {status === 'connected' ? 'online' : status}
