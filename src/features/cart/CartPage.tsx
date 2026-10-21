@@ -148,9 +148,10 @@ function MobileRow({ item }: { item: CartItem }) {
             onClick={() => update.mutate({ itemId: item.id, quantity: Math.max(1, Math.min(item.quantity - 1, item.maxQuantity)) })}
             disabled={item.quantity <= 1}
             aria-label="Diminuir quantidade"
-            className="flex size-6 items-center justify-center rounded-full border border-line bg-surface-2 text-cream disabled:opacity-40"
+            className="flex size-6 items-center justify-center rounded-full border border-line bg-surface-2"
           >
-            <span aria-hidden className="block h-0.5 w-2.5 bg-line-2" />
+            {/* Como no Figma: traço claro quando dá para diminuir, escuro na quantidade mínima. */}
+            <span aria-hidden className={cn('block h-0.5 w-2.5', item.quantity > 1 ? 'bg-cream' : 'bg-line-2')} />
           </button>
           <output aria-label={`Quantidade: ${item.quantity}`} className="w-3 text-center text-base text-cream">
             {item.quantity}
