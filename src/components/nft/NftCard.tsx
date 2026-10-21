@@ -76,7 +76,7 @@ export function NftCard({ nft, priority = false, variant = 'grid' }: { nft: NftS
             onClick={() => toggleFavorite.toggle(nft.id, nft.name, favorite)}
             aria-pressed={favorite}
             aria-label={favorite ? `Remover ${nft.name} da lista de interesse` : `Adicionar ${nft.name} à lista de interesse`}
-            className="absolute top-3 right-3 z-10 flex size-7 items-center justify-center rounded-full border border-line bg-surface-2 text-sand"
+            className="absolute top-[18px] right-3 z-10 flex size-7 items-center justify-center rounded-full border border-line bg-surface-2 text-sand"
           >
             <Heart className={cn('size-3.5', favorite && 'text-brand-light')} />
           </button>

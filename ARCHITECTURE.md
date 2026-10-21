@@ -195,6 +195,7 @@ O Figma define a identidade e a composição. Os pontos abaixo complementam esta
 - **Cabeçalho autenticado.** O botão "Entrar" vira o menu da conta (nome ou avatar, com perfil, carteiras, lista de interesse e sair). O Figma só mostra o estado deslogado.
 - **Badge do carrinho.** Mostra o número de linhas do carrinho (no layout, o número é ilustrativo).
 - **Ações do card.** As ações (carrinho, favoritar, ver) aparecem no hover ou foco, como no frame de login, e ficam sempre visíveis em telas sem hover.
+- **Favorito no card mobile.** No Figma o botão de favorito encosta no topo da arte; ele fica 6 px abaixo (e 8 px da borda direita) para não colar na curva do canto.
 - **Grade do catálogo no mobile.** No Figma, a coluna direita começa 32 px abaixo da esquerda (efeito escalonado). A pedido do cliente, as duas colunas ficam alinhadas, como na lista de interesse.
 - **Galeria do detalhe.** O arquivo traz uma arte por NFT (as miniaturas do Figma são idênticas). A galeria mostra enquadramentos diferentes da mesma obra, com zoom em diálogo. A aba "Avaliações" exibe avaliações vindas da API.
 - **Hero.** Carrossel manual de 3 destaques vindos da API, sem autoplay (acessibilidade). Os slides 2 e 3 usam o mesmo padrão visual do 1º.
