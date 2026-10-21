@@ -116,7 +116,7 @@ function Gallery({ nft }: { nft: NftDetail }) {
           type="button"
           onClick={() => setZoomOpen(true)}
           aria-label="Ampliar imagem"
-          className="absolute top-3 right-[34px] flex size-[30px] items-center justify-center rounded-full bg-ink/60 text-cream hover:text-brand-light"
+          className="absolute top-[13px] right-3 flex size-[30px] items-center justify-center rounded-full border border-line bg-surface-2 text-cream hover:text-brand-light"
         >
           <Zoom className="size-5" />
         </button>
