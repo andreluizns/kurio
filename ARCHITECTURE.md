@@ -198,7 +198,7 @@ O Figma define a identidade e a composição. Os pontos abaixo complementam esta
 - **Grade do catálogo no mobile.** No Figma, a coluna direita começa 32 px abaixo da esquerda (efeito escalonado). A pedido do cliente, as duas colunas ficam alinhadas, como na lista de interesse.
 - **Galeria do detalhe.** O arquivo traz uma arte por NFT (as miniaturas do Figma são idênticas). A galeria mostra enquadramentos diferentes da mesma obra, com zoom em diálogo. A aba "Avaliações" exibe avaliações vindas da API.
 - **Hero.** Carrossel manual de 3 destaques vindos da API, sem autoplay (acessibilidade). Os slides 2 e 3 usam o mesmo padrão visual do 1º.
-- **Login e cadastro.** No desktop são um modal sobre a página inicial, como no layout. No mobile, tela cheia, com um botão de voltar no canto superior esquerdo (não previsto no Figma; mesmo estilo do carrinho). Fechar o modal ou voltar retorna à página de origem; quando a origem é uma área que exige conta, vai para o carrinho (pagamento) ou para o início, evitando um ciclo de volta ao login.
+- **Login e cadastro.** No desktop são um modal sobre a página inicial, como no layout. No mobile, tela cheia, com um botão de voltar no canto superior esquerdo (não previsto no Figma; mesmo estilo do carrinho). Fechar o modal ou voltar retorna à página de origem; quando a origem é uma área que exige conta, vai para o carrinho (pagamento) ou para o início, evitando um ciclo de volta ao login. No cadastro mobile, o campo "Nome de usuário" fica alinhado à esquerda como os demais (no Figma está centralizado).
 
 **Checkout e pedidos**
 

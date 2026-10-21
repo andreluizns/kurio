@@ -159,7 +159,7 @@ function RegisterForm({ redirect, mobile }: AuthProps) {
     <form noValidate onSubmit={onSubmit} className="flex flex-col gap-3" aria-label="Criar conta na Kurio">
       <FormAlert message={formError} />
       <Field label="Nome de usuário" hideLabel error={errors.username?.message}>
-        {(p) => <Input {...p} {...form.register('username')} autoComplete="username" placeholder="Nome de usuário" className={cn(inputClass(mobile), mobile && 'text-center')} />}
+        {(p) => <Input {...p} {...form.register('username')} autoComplete="username" placeholder="Nome de usuário" className={inputClass(mobile)} />}
       </Field>
       <Field label="E-mail" hideLabel error={errors.email?.message}>
         {(p) => <Input {...p} {...form.register('email')} type="email" autoComplete="email" placeholder="Digite seu e-mail" className={inputClass(mobile)} />}
