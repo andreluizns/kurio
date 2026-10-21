@@ -30,6 +30,7 @@ function shortAddress(address: string) {
 function isStale(quote: Quote, cart: Cart | undefined) {
   if (!cart) return false
   if (cart.items.length !== quote.lines.length) return true
+  if ((cart.coupon?.code ?? null) !== (quote.coupon?.code ?? null)) return true
   return quote.lines.some((line) => {
     const item = cart.items.find((i) => i.id === line.itemId)
     return !item || item.unitPrice !== line.unitPrice || item.quantity !== line.quantity || item.available < line.quantity
@@ -37,7 +38,7 @@ function isStale(quote: Quote, cart: Cart | undefined) {
 }
 
 /**
- * Revisão do pedido. É montado a cada abertura (key no pai), então o estado
+ * Revisão do pedido. É montado a cada abertura (o pai o desmonta ao fechar), então o estado
  * inicial vale para uma nova revisão: nova cotação ou retomada da tentativa salva.
  */
 export function ReviewDialog({
