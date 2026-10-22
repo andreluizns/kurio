@@ -4,6 +4,8 @@ Implementação do desafio frontend (enunciado em [docs/DESAFIO.md](docs/DESAFIO
 
 Toda a API REST e o tempo real (Socket.IO) são simulados pelo **MSW** na camada de rede, com estado persistente, cenários de falha determinísticos e reset. Não há backend real.
 
+- **Aplicação publicada:** https://kurio-olive.vercel.app
+- **Repositório:** https://github.com/andreluizns/kurio
 - **Arquitetura, contratos, cache, sessão e decisões:** [ARCHITECTURE.md](ARCHITECTURE.md)
 - **Auditoria Lighthouse:** [lighthouse/README.md](lighthouse/README.md)
 
@@ -130,6 +132,8 @@ São 86 testes: 82 passam e 4 são pulados de propósito (casos exclusivos de um
 Cada teste começa num contexto novo, com reset do servidor simulado. Relógio (`page.clock`), latência e disparo de eventos são controlados pelos testes. O relatório HTML fica em `playwright-report/`, com traces das falhas.
 
 ## Deploy
+
+A versão publicada está em https://kurio-olive.vercel.app.
 
 O projeto está pronto para a Vercel (`vercel.json`, com fallback de SPA e cabeçalhos do service worker) e para a Netlify (`public/_redirects`). O build de produção inclui a camada de mocks ativa, então a URL publicada funciona sem backend, com acesso direto e refresh em qualquer rota.
 
