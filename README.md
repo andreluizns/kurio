@@ -125,7 +125,7 @@ pnpm test:e2e                                 # build + preview + suíte complet
 E2E_BASE_URL=http://localhost:4173 pnpm test:e2e   # reaproveita um servidor já iniciado
 ```
 
-São 82 testes: 79 passam e 3 são pulados de propósito (casos exclusivos do desktop no projeto mobile). Eles cobrem os 12 grupos do enunciado e a regressão visual de início, detalhe, carrinho e pagamento, com baselines em `e2e/__screenshots__`.
+São 86 testes: 82 passam e 4 são pulados de propósito (casos exclusivos de um dos tamanhos de tela). Eles cobrem os 12 grupos do enunciado e a regressão visual de início, detalhe, carrinho e pagamento, com baselines em `e2e/__screenshots__`.
 
 Cada teste começa num contexto novo, com reset do servidor simulado. Relógio (`page.clock`), latência e disparo de eventos são controlados pelos testes. O relatório HTML fica em `playwright-report/`, com traces das falhas.
 
